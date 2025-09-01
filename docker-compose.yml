@@ -9,6 +9,7 @@ services:
     volumes:
       - ./data:/w:z      # File share directory
       - ./config/copyparty.conf:/etc/copyparty.conf:ro  # Mount config file
+      - /mnt/j-server/e/Archive/Media:/media:ro  # Jellyfin media volume (read-only)
     command: ["-c", "/etc/copyparty.conf"]
     restart: unless-stopped
     stop_grace_period: 15s  # thumbnailer is allowed to continue finishing up for 10s after the shutdown signal

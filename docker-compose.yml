@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  copyparty:
+    image: copyparty/ac:latest
+    container_name: copyparty
+    ports:
+      - "3923:3923"
+    volumes:
+      - ./data:/w:z      # File share directory
+      - ./config/copyparty.conf:/etc/copyparty.conf:ro  # Mount config file
+    command: ["-c", "/etc/copyparty.conf"]
+    restart: unless-stopped
+    stop_grace_period: 15s  # thumbnailer is allowed to continue finishing up for 10s after the shutdown signal
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q 127.0.0.1:3923/?reset"]
+      interval: 1m
+      timeout: 2s
+      retries: 5
+      start_period: 15s
+    networks:
+      - copyparty-network
+
+networks:
+  copyparty-network:
+    driver: bridge

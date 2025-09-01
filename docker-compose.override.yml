@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  copyparty:
+    volumes:
+      - ./data:/w:z
+      - ./logs:/var/log/copyparty:z

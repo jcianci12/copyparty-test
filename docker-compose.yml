@@ -22,6 +22,18 @@ services:
     networks:
       - copyparty-network
 
+  metube:
+    image: ghcr.io/alexta69/metube
+    container_name: metube
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./data/downloads:/downloads  # Downloads directory (accessible via copyparty)
+      - ./logs/metube:/var/log/metube:z  # MeTube logs
+    networks:
+      - copyparty-network
+
 networks:
   copyparty-network:
     driver: bridge
